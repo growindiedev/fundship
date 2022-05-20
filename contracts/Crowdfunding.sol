@@ -177,7 +177,7 @@ contract Crowdfunding {
         addressFundingList[msg.sender].push(Funded(_index, msg.value));
     }
 
-    // Helper fundtion adds details of funding to the project in projects array
+    // Helper function adds details of funding to the project in projects array
     function addContribution(uint256 _index) internal validIndex(_index)  {
         for(uint256 i = 0; i < projects[_index].contributors.length; i++) {
             if(projects[_index].contributors[i] == msg.sender) {
@@ -192,6 +192,14 @@ contract Crowdfunding {
             projects[_index].refundClaimed.push(false);
         }
         addToFundingList(_index);
+    }
+
+    // funds the projects 
+    function fundProject(uint256 _index) payable external validIndex(_index)  {
+        require(projects[_index].creatorAddress != msg.sender, "You are the project owner");
+        require(projects[_index].duration + projects[_index].creationTime >= block.timestamp, "Project Funding Time Expired");
+        addContribution(_index);
+        projects[_index].amountRaised += msg.value;
     }
 
 
