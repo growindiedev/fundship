@@ -202,6 +202,46 @@ contract Crowdfunding {
         projects[_index].amountRaised += msg.value;
     }
 
+    // to claim funds by creator
+    function claimFund(uint256 _index) validIndex(_index) external {
+        require(projects[_index].creatorAddress == msg.sender, "You are not Project Owner");
+        require(projects[_index].duration + projects[_index].creationTime < block.timestamp, "Project Funding Time Not Expired");
+        require(projects[_index].refundPolicy == RefundPolicy.NONREFUNDABLE 
+        || projects[_index].amountRaised >= projects[_index].fundingGoal, "Funding goal not reached");
+        require(!projects[_index].claimedAmount, "Already claimed raised funds");
+        projects[_index].claimedAmount = true;
+        payable(msg.sender).transfer(projects[_index].amountRaised);
+    }
+
+    // helper for claim refund
+    function getContributorIndex(uint256 _index) validIndex(_index) internal view returns(int256) {
+        int256 contributorIndex = -1;
+        for(uint256 i = 0; i < projects[_index].contributors.length; i++) {
+            if(msg.sender == projects[_index].contributors[i]) {
+                contributorIndex = int256(i);
+                break;
+            }
+        }
+        return contributorIndex;
+    }
+
+    //contributors can claim refund when refundable project doesn't reach its goal
+    function claimRefund(uint256 _index) validIndex(_index) external {
+        require(projects[_index].duration + projects[_index].creationTime < block.timestamp, "Project Funding Time Not Expired");
+        require(projects[_index].refundPolicy == RefundPolicy.REFUNDABLE 
+        && projects[_index].amountRaised < projects[_index].fundingGoal, "Funding goal not reached");
+        
+        int256 index = getContributorIndex(_index);
+        require(index != -1, "You did not contribute to this project");
+        
+        uint256 contributorIndex = uint256(index);
+        require(!projects[_index].refundClaimed[contributorIndex], "Already claimed refund amount");
+        
+        projects[_index].refundClaimed[contributorIndex] = true;
+        payable(msg.sender).transfer(projects[_index].amount[contributorIndex]);
+    }
+
+
 
 
     
