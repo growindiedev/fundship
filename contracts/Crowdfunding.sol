@@ -20,16 +20,16 @@ contract Crowdfunding {
         string projectDescription;      
         string creatorName;             
         string projectLink;             
-        string cid;                     
+        string cid;                   // ipfs link of the image   
         uint256 fundingGoal;            
-        uint256 duration;               
+        uint256 duration;             // duration of project in minutes     
         uint256 creationTime;           
         uint256 amountRaised;           
         address creatorAddress;         
         Category category;                
         RefundPolicy refundPolicy;      
-        address[] contributors;         // Stores the contributors of this project
-        uint256[] amount;               // Stores the amount contributed by conrtibutors at corresponding index at contributors array
+        address[] contributors;         // keeps the contributors of this project
+        uint256[] amount;               // keeps the amount contributed by conrtibutors at corresponding index at contributors array
         bool[] refundClaimed;           // Keeps record if the contributors claimed refund at cooresponding index at contributors array
         bool claimedAmount;             // Keeps record if creator claimed raised funds
     }
@@ -59,6 +59,67 @@ contract Crowdfunding {
 
     // Stores the list of fundings  by an address
     mapping(address => Funded[]) addressFundingList;
+
+    modifier validIndex(uint256 _index) {
+        require(_index < projects.length, "Invalid Project Id");
+    _;
+    }
+
+    function createNewProject(
+        string memory _name,
+        string memory _desc,
+        string memory _creatorName,
+        string memory _projectLink,
+        string memory _cid,
+        uint256 _fundingGoal,
+        uint256 _duration,
+        Category _category,
+        RefundPolicy _refundPolicy
+    ) external {
+        projects.push(Project({
+            creatorAddress: msg.sender,
+            projectName: _name,
+            projectDescription: _desc,
+            creatorName: _creatorName,
+            projectLink: _projectLink,
+            cid: _cid,
+            fundingGoal: _fundingGoal * 10**18,
+            duration: _duration * (1 minutes),
+            creationTime: block.timestamp,
+            category: _category,
+            refundPolicy: _refundPolicy,
+            amountRaised: 0,
+            contributors: new address[](0),
+            amount: new uint256[](0),
+            claimedAmount: false,
+            refundClaimed: new bool[](0)
+        }));
+        addressProjectsList[msg.sender].push(projects.length - 1);
+    }
+
+    function getAllProjectsDetail() external view returns(ProjectMetadata[] memory allProjects) {     // returns metadata for all projects
+    ProjectMetadata[] memory newList = new ProjectMetadata[](projects.length);
+    for(uint256 i = 0; i < projects.length; i++){
+        newList[i] = ProjectMetadata(
+            projects[i].projectName,
+            projects[i].projectDescription,
+            projects[i].creatorName,
+            projects[i].cid,
+            projects[i].fundingGoal,
+            projects[i].amountRaised,
+            projects[i].contributors.length,
+            projects[i].creationTime,
+            projects[i].duration,
+            projects[i].category
+        );
+    }
+    return newList;
+}
+
+
+
+
+
 
 
 
