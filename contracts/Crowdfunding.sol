@@ -65,6 +65,7 @@ contract Crowdfunding {
         _;
     }
 
+    //creates new project
     function createNewProject(
         string memory _name,
         string memory _desc,
@@ -152,10 +153,22 @@ contract Crowdfunding {
       return newList;
     }
 
-    // Returns the project at the given index
+    
     function getProject(uint256 _index) external view validIndex(_index) returns(Project memory project) {
-        return projects[_index];
+      return projects[_index];
     }
+
+    function getCreatorProjects(address creator) external view returns(uint256[] memory createdProjects) {
+      return addressProjectsList[creator];
+    }
+
+    function getUserFundings(address contributor) external view returns(Funded[] memory fundedProjects) {
+      return addressFundingList[contributor];
+    }
+
+    
+
+    
 
 
 
