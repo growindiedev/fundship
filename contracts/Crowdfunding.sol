@@ -166,7 +166,35 @@ contract Crowdfunding {
       return addressFundingList[contributor];
     }
 
-    
+    // Helper function adds details of Funding to addressFundingList
+    function addToFundingList(uint256 _index) internal validIndex(_index) {
+        for(uint256 i = 0; i < addressFundingList[msg.sender].length; i++) {
+            if(addressFundingList[msg.sender][i].projectIndex == _index) {
+                addressFundingList[msg.sender][i].totalAmount += msg.value;
+                return;
+            }
+        }
+        addressFundingList[msg.sender].push(Funded(_index, msg.value));
+    }
+
+    // Helper fundtion adds details of funding to the project in projects array
+    function addContribution(uint256 _index) internal validIndex(_index)  {
+        for(uint256 i = 0; i < projects[_index].contributors.length; i++) {
+            if(projects[_index].contributors[i] == msg.sender) {
+                projects[_index].amount[i] += msg.value;
+                addToFundingList(_index);
+                return;
+            }
+        }
+        projects[_index].contributors.push(msg.sender);
+        projects[_index].amount.push(msg.value);
+        if(projects[_index].refundPolicy == RefundPolicy.REFUNDABLE) {
+            projects[_index].refundClaimed.push(false);
+        }
+        addToFundingList(_index);
+    }
+
+
 
     
 
