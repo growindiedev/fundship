@@ -62,7 +62,7 @@ contract Crowdfunding {
 
     modifier validIndex(uint256 _index) {
         require(_index < projects.length, "Invalid Project Id");
-    _;
+        _;
     }
 
     function createNewProject(
@@ -98,23 +98,66 @@ contract Crowdfunding {
     }
 
     function getAllProjectsDetail() external view returns(ProjectMetadata[] memory allProjects) {     // returns metadata for all projects
-    ProjectMetadata[] memory newList = new ProjectMetadata[](projects.length);
-    for(uint256 i = 0; i < projects.length; i++){
-        newList[i] = ProjectMetadata(
-            projects[i].projectName,
-            projects[i].projectDescription,
-            projects[i].creatorName,
-            projects[i].cid,
-            projects[i].fundingGoal,
-            projects[i].amountRaised,
-            projects[i].contributors.length,
-            projects[i].creationTime,
-            projects[i].duration,
-            projects[i].category
-        );
+      ProjectMetadata[] memory newList = new ProjectMetadata[](projects.length);
+      for(uint256 i = 0; i < projects.length; i++){
+          newList[i] = ProjectMetadata(
+              projects[i].projectName,
+              projects[i].projectDescription,
+              projects[i].creatorName,
+              projects[i].cid,
+              projects[i].fundingGoal,
+              projects[i].amountRaised,
+              projects[i].contributors.length,
+              projects[i].creationTime,
+              projects[i].duration,
+              projects[i].category
+          );
+      }
+      return newList;
     }
-    return newList;
-}
+
+    // Returns array of metadata of project at respective indexes 
+    function getProjectsDetail(uint256[] memory _indexList) external view returns(ProjectMetadata[] memory projectsList) {  
+      ProjectMetadata[] memory newList = new ProjectMetadata[](_indexList.length);
+      for(uint256 index = 0; index < _indexList.length; index++) {
+          if(_indexList[index] < projects.length) {
+              uint256 i = _indexList[index]; 
+              newList[index] = ProjectMetadata(
+                  projects[i].projectName,
+                  projects[i].projectDescription,
+                  projects[i].creatorName,
+                  projects[i].cid,
+                  projects[i].fundingGoal,
+                  projects[i].amountRaised,
+                  projects[i].contributors.length,
+                  projects[i].creationTime,
+                  projects[i].duration,
+                  projects[i].category
+              );
+          } else {
+              newList[index] = ProjectMetadata(
+                  "Invalid Project",
+                  "Invalid Project",
+                  "Invalid Project",
+                  "Invalid Project",
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  Category.DESIGNANDTECH
+              );
+          }
+      }
+      return newList;
+    }
+
+    // Returns the project at the given index
+    function getProject(uint256 _index) external view validIndex(_index) returns(Project memory project) {
+        return projects[_index];
+    }
+
+
 
 
 
