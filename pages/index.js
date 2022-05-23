@@ -1,81 +1,190 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { utils } from "ethers";
-import { crowdfundingAddress } from "../config";
-import { AccountContext } from "../context.js";
+import { useEffect, useState } from "react";
+import CategoryComponent from "../components/CategoryComponent";
+import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
+import Link from "next/router";
+import dummyPic from "../assets/pg1.jpg";
 
-export default function Home() {
-  const router = useRouter();
-  const [myContract, setMyContract] = useState(null);
-  const [address, setAddress] = useState();
-
-  let provider, signer, add;
-
-  //chainId = web3.utils.toHex(chainId);
-
-  async function changeNetwork() {
-    // switch network to avalanche
+export default function Home(props) {
+  const PRECISION = 10 ** 18;
+  const [stats, setStats] = useState({
+    projects: 0,
+    fundings: 0,
+    contributors: 0,
+  });
+  const [featuredRcmd, setFeaturedRcmd] = useState([]);
+  const [recentUploads, setRecentUploads] = useState([]);
+  const getAllProjects = async () => {
     try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: utils.hexValue(80001) }],
-      });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: utils.hexValue(80001),
-                chainName: "Matic Mumbai Testnet",
-                nativeCurrency: {
-                  name: "Matic Mumbai Testnet",
-                  symbol: "MATIC",
-                  decimals: 18,
-                },
-                rpcUrls: ["https://rpc-mumbai.matic.today"],
-                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-              },
-            ],
+      let res = await props.contract.getAllProjectsDetail().then((res) => {
+        let tmp = [];
+        let amount = 0,
+          contrib = 0;
+        for (const index in res) {
+          let {
+            amountRaised,
+            cid,
+            creatorName,
+            fundingGoal,
+            projectDescription,
+            projectName,
+            totalContributors,
+          } = { ...res[index] };
+          tmp.push({
+            amountRaised,
+            cid,
+            creatorName,
+            fundingGoal,
+            projectDescription,
+            projectName,
+            totalContributors,
+            index,
           });
-        } catch (addError) {
-          alert("Error in add avalanche FUJI testnet");
+          amount += Number(amountRaised / PRECISION);
+          contrib += Number(totalContributors);
         }
-      }
-    }
-  }
-
-  // Connects to Metamask and sets the myContract state with a new instance of the contract
-  async function connect() {
-    let res = await connectToMetamask();
-    if (res === true) {
-      await changeNetwork();
-      provider = new ethers.providers.Web3Provider(window.ethereum);
-      signer = provider.getSigner();
-      add = await signer.getAddress();
-      setAddress(add);
-
-      try {
-        const contract = new ethers.Contract(crowdfundingAddress, abi, signer);
-        setMyContract(contract);
-      } catch (err) {
-        alert("CONTRACT_ADDRESS not set properly");
-        console.log(err);
-      }
-    } else {
-      alert("Couldn't connect to Metamask");
-    }
-  }
-
-  async function connectToMetamask() {
-    try {
-      await window.ethereum.enable();
-      return true;
+        setStats({
+          projects: tmp.length,
+          fundings: amount,
+          contributors: contrib,
+        });
+        return tmp;
+      });
+      res.sort((a, b) => {
+        return b.totalContributors * 1 - a.totalContributors * 1;
+      });
+      setFeaturedRcmd(res.slice(0, 4));
+      setRecentUploads(res.slice(4, 24));
     } catch (err) {
-      return false;
+      alert(err);
+      console.log(err);
     }
-  }
-  return <div></div>;
+  };
+
+  const renderRecommendations = (val) => {
+    return val.map((project, index) => {
+      return (
+        <div className="recommendationCard" key={index}>
+          <Link
+            href={{
+              pathname: "/project",
+              query: { index: project.index },
+            }}
+          >
+            <div
+              className="rcmdCardImg"
+              style={{
+                backgroundImage: project.cid
+                  ? `url(${"https://" + project.cid})`
+                  : dummyPic,
+              }}
+            ></div>
+          </Link>
+          <div className="rcmdCardDetails">
+            <div className="rcmdCardHeading">
+              <Link
+                href={{
+                  pathname: "/project",
+                  query: { index: project.index },
+                }}
+              >
+                {project.projectName}
+              </Link>
+            </div>
+            <div className="rcmdCardFundedPercentage">
+              {((project.amountRaised / project.fundingGoal) * 100).toFixed(2) +
+                "% Funded"}
+            </div>
+            <div className="rcmdCardAuthor">{"By " + project.creatorName}</div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
+
+  return (
+    <>
+      <CategoryComponent isHome={true} />
+      {/* siteStats */}
+      <div className="siteStats">
+        <div className="tagLine">
+          Creative work shows us what’s possible.
+          <br></br>
+          Help fund it here.
+        </div>
+        <div className="smallHeading">TILL THIS DAY</div>
+        <div className="stats">
+          <div className="statItem">
+            <div className="statItemValue">{stats.projects}</div>
+            <div className="statItemTag">projects </div>
+          </div>
+          <div className="statItem">
+            <div className="statItemValue">{stats.fundings + " AVAX"}</div>
+            <div className="statItemTag">towards creative work</div>
+          </div>
+          <div className="statItem">
+            <div className="statItemValue">{stats.contributors}</div>
+            <div className="statItemTag">backings</div>
+          </div>
+        </div>
+      </div>
+
+      {featuredRcmd.length !== 0 ? (
+        <div className="suggestions">
+          <div className="suggLeftContainer">
+            <div className="featuredCard">
+              <div className="featuredHeading">FEATURED PROJECT</div>
+              <Link
+                href={{
+                  pathname: "/project",
+                  query: { index: featuredRcmd[0].index },
+                }}
+              >
+                <div
+                  className="featuredCardProjectImg"
+                  style={{
+                    backgroundImage: featuredRcmd[0].cid
+                      ? `url(${"https://" + featuredRcmd[0].cid})`
+                      : dummyPic,
+                  }}
+                ></div>
+              </Link>
+              <div className="featuredProjectHeading">
+                <Link
+                  href={{
+                    pathname: "/project",
+                    query: { index: featuredRcmd[0].index },
+                  }}
+                >
+                  {featuredRcmd[0].projectName}
+                </Link>
+              </div>
+              <div className="featuredProjectDescription">
+                {featuredRcmd[0].projectDescription}
+              </div>
+              <div className="featuredProjectAuthor">
+                {"By " + featuredRcmd[0].creatorName}
+              </div>
+            </div>
+          </div>
+          <div className="suggRightContainer">
+            <div className="recommendationList">
+              <div className="recommendationHeading">RECOMMENDED FOR YOU</div>
+              {renderRecommendations(featuredRcmd.slice(1, 4))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="noProjects">No projects found</div>
+      )}
+      <ScrollShowbarComponent
+        recentUploads={recentUploads}
+        heading={"RECENT UPLOADS"}
+        emptyMessage={"No recent uploads"}
+      />
+    </>
+  );
 }
