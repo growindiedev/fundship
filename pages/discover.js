@@ -7,6 +7,7 @@ export default function DiscoverComponent(props) {
   const [filter, setFilter] = useState(
     props.router?.query?.selected >= 0 ? props.router?.query?.selected : -1
   );
+  //console.log("discovery", props.router?.query?.selected);
   const [projects, setProjects] = useState([]);
   const changeFilter = (val) => {
     setFilter(val);

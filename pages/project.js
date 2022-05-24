@@ -22,7 +22,9 @@ function ProjectComponent(props) {
   });
   const [timerString, setTimerString] = useState("");
   const [isOver, setIsOver] = useState(false);
-  const { index } = props.router?.query;
+  console.log("propoye", props);
+  //const index = props.router?.query?.index;
+  const index = 0;
   const PRECISION = 10 ** 18;
 
   // func to update the progress bar everytime getProjectDetails() executes.
@@ -99,6 +101,7 @@ function ProjectComponent(props) {
       });
     } catch (error) {
       alert("Error fetching details");
+      console.log("woot", index);
       console.log(error);
     }
   }

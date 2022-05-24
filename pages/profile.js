@@ -1,8 +1,10 @@
-import ScrollShowbarComponent from "./ScrollShowbarComponent";
+import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
 import { useState, useEffect } from "react";
 
 function ProfileComponent(props) {
-  const { address, name } = props.router?.query;
+  const address = props.router?.query?.address;
+  const name = props.router?.query?.name;
+
   const [ongoingProjects, setOngoingProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
   const [userFundedProjects, setUserFundedProjects] = useState([]);

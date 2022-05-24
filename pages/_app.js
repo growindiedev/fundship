@@ -9,11 +9,12 @@ import { ethers } from "ethers";
 import ConnectWallet from "../components/ConnectWallet.js";
 import NavbarComponent from "../components/NavbarComponent";
 import FooterComponent from "../components/FooterComponent";
+import Crowdfunding from "../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json";
 
-import { abi } from "../abi";
+//import { abi } from "../abi";
 
 function MyApp({ Component, pageProps }) {
-  const CONTRACT_ADDRESS = "0xad7C61FC480E5EEBA7886Fc62A789F9921caC9d7";
+  //const CONTRACT_ADDRESS = "0xad7C61FC480E5EEBA7886Fc62A789F9921caC9d7";
 
   const [myContract, setMyContract] = useState(null);
   const [address, setAddress] = useState();
@@ -92,14 +93,19 @@ function MyApp({ Component, pageProps }) {
   async function connect() {
     let res = await connectToMetamask();
     if (res === true) {
-      await changeNetwork();
-      provider = new ethers.providers.Web3Provider(window.ethereum);
+      //await changeNetwork();
+      //provider = new ethers.providers.Web3Provider(window.ethereum);
+      provider = new ethers.providers.JsonRpcProvider();
       signer = provider.getSigner();
       add = await signer.getAddress();
       setAddress(add);
 
       try {
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+        const contract = new ethers.Contract(
+          crowdfundingAddress,
+          Crowdfunding.abi,
+          signer
+        );
         setMyContract(contract);
       } catch (err) {
         alert("CONTRACT_ADDRESS not set properly");
@@ -125,7 +131,7 @@ function MyApp({ Component, pageProps }) {
     ) : (
       <>
         {myContract && <NavbarComponent address={address} />}
-        <Component {...pageProps} />
+        <Component {...pageProps} contract={myContract} />
         {myContract && <FooterComponent />}
       </>
     );

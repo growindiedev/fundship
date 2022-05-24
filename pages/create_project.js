@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { create } from "ipfs-http-client";
+//import { create } from "ipfs-http-client";
+import { create as ipfsHttpClient } from "ipfs-http-client";
 
 function CreateProjectComponent(props) {
   const [formInput, setFormInput] = useState({
@@ -64,17 +65,21 @@ function CreateProjectComponent(props) {
   // submit the form input data to smart contract
   async function submitProjectData(e) {
     // handle the submit action of the form
-    const client = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-    });
+    // const client = create({
+    //   host: "ipfs.infura.io",
+    //   port: 5001,
+    //   protocol: "https",
+    // });
+    const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
     e.preventDefault();
     if (inputImage) {
       try {
         const added = await client.add(inputImage);
         console.log(added.path);
-        formInput["image"] = `ipfs.io/ipfs/${added.path}`;
+        const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+
+        //formInput["image"] = `ipfs.io/ipfs/${added.path}`;
+        formInput["image"] = url;
       } catch (error) {
         alert("Uploading file error: " + error);
         console.log(error);

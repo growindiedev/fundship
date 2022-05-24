@@ -6,8 +6,10 @@ async function main() {
   const crowdfunding = await Crowdfunding.deploy();
 
   await crowdfunding.deployed();
+  const [signer, buyerAddress] = await hre.ethers.getSigners();
 
   console.log("Crowdfunding deployed to:", crowdfunding.address);
+  console.log("Crowdfunding deployed by:", signer.address);
 
   fs.writeFileSync(
     "./config.js",

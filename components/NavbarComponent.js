@@ -17,7 +17,7 @@ export default function NavbarComponent(props) {
           Start a project
         </div>
       </nav>
-      <div className="centerNavbarContainer">DEFINDSTARTER</div>
+      <div className="centerNavbarContainer">FUNDSHIP</div>
       <div className="rightNavbarContainer">
         <div className="navItem">
           <Link
