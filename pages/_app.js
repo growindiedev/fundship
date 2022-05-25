@@ -1,6 +1,5 @@
 import "../styles/globals.css";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import { utils } from "ethers";
 import { crowdfundingAddress } from "../config";
 import { AccountContext } from "../context.js";
