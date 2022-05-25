@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { utils } from "ethers";
 import { crowdfundingAddress } from "../config";
@@ -7,26 +7,22 @@ import { AccountContext } from "../context.js";
 import { ethers } from "ethers";
 
 import ConnectWallet from "../components/ConnectWallet.js";
-import NavbarComponent from "../components/NavbarComponent";
-import FooterComponent from "../components/FooterComponent";
+import Layout from "../components/layout";
+
 import Crowdfunding from "../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json";
 
-//import { abi } from "../abi";
-
 function MyApp({ Component, pageProps }) {
-  //const CONTRACT_ADDRESS = "0xad7C61FC480E5EEBA7886Fc62A789F9921caC9d7";
-
   const [myContract, setMyContract] = useState(null);
   const [address, setAddress] = useState();
 
   let provider, signer, add;
 
   async function changeNetwork() {
-    // switch network to avalanche
+    // switch network to matic mumbai
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0xa869" }],
+        params: [{ chainId: utils.hexValue(80001) }],
       });
     } catch (switchError) {
       // This error code indicates that the chain has not been added to MetaMask.
@@ -36,66 +32,30 @@ function MyApp({ Component, pageProps }) {
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: "0xa869",
-                chainName: "Avalanche Fuji Testnet",
+                chainId: utils.hexValue(80001),
+                chainName: "Matic Mumbai Testnet",
                 nativeCurrency: {
-                  name: "Avalanche",
-                  symbol: "AVAX",
+                  name: "Matic Testnet",
+                  symbol: "MATIC",
                   decimals: 18,
                 },
-                rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
               },
             ],
           });
         } catch (addError) {
-          alert("Error in add avalanche FUJI testnet");
+          alert("Error in matic mumbai testnet");
         }
       }
     }
   }
 
-  //chainId = web3.utils.toHex(chainId);
-
-  // async function changeNetwork() {
-  //   // switch network to matic mumbai
-  //   try {
-  //     await window.ethereum.request({
-  //       method: "wallet_switchEthereumChain",
-  //       params: [{ chainId: utils.hexValue(80001) }],
-  //     });
-  //   } catch (switchError) {
-  //     // This error code indicates that the chain has not been added to MetaMask.
-  //     if (switchError.code === 4902) {
-  //       try {
-  //         await window.ethereum.request({
-  //           method: "wallet_addEthereumChain",
-  //           params: [
-  //             {
-  //               chainId: utils.hexValue(80001),
-  //               chainName: "Matic Mumbai Testnet",
-  //               nativeCurrency: {
-  //                 name: "Matic Mumbai Testnet",
-  //                 symbol: "MATIC",
-  //                 decimals: 18,
-  //               },
-  //               rpcUrls: ["https://rpc-mumbai.matic.today"],
-  //               blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-  //             },
-  //           ],
-  //         });
-  //       } catch (addError) {
-  //         alert("Error in matic mumbai testnet");
-  //       }
-  //     }
-  //   }
-  // }
-
   async function connect() {
     let res = await connectToMetamask();
     if (res === true) {
-      //await changeNetwork();
-      //provider = new ethers.providers.Web3Provider(window.ethereum);
-      provider = new ethers.providers.JsonRpcProvider();
+      await changeNetwork();
+      provider = new ethers.providers.Web3Provider(window.ethereum);
       signer = provider.getSigner();
       add = await signer.getAddress();
       setAddress(add);
@@ -129,11 +89,9 @@ function MyApp({ Component, pageProps }) {
     return !myContract ? (
       <ConnectWallet connectMetamask={connect} />
     ) : (
-      <>
-        {myContract && <NavbarComponent address={address} />}
-        <Component {...pageProps} contract={myContract} />
-        {myContract && <FooterComponent />}
-      </>
+      <Layout address={address}>
+        <Component {...pageProps} contract={myContract} userAddress={address} />
+      </Layout>
     );
   }
 

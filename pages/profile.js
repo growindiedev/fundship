@@ -1,9 +1,11 @@
 import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 function ProfileComponent(props) {
-  const address = props.router?.query?.address;
-  const name = props.router?.query?.name;
+  const router = useRouter();
+
+  const { address, name } = router.query;
 
   const [ongoingProjects, setOngoingProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
@@ -146,7 +148,7 @@ function ProfileComponent(props) {
       ) : (
         ""
       )}
-      {address === props.userAddress && userFundedProjects.length ? (
+      {address === props.userAddress && userFundedProjects?.length ? (
         <div className="projectsContainer">
           <div className="projectList">
             <ScrollShowbarComponent

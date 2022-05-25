@@ -17,14 +17,16 @@ export default function ScrollShowbarComponent(props) {
               query: { index: project.index },
             }}
           >
-            <div
-              className="cardImg"
-              style={{
-                backgroundImage: project.cid
-                  ? `url(${"https://" + project.cid})`
-                  : dummyPic,
-              }}
-            ></div>
+            <a>
+              <div
+                className="cardImg"
+                style={{
+                  backgroundImage: project.cid
+                    ? `url(${"https://" + project.cid})`
+                    : dummyPic,
+                }}
+              ></div>
+            </a>
           </Link>
           <div className="cardDetail">
             <div className="cardTitle">
@@ -34,7 +36,7 @@ export default function ScrollShowbarComponent(props) {
                   query: { index: project.index },
                 }}
               >
-                {project.projectName}
+                <a>{project.projectName}</a>
               </Link>
             </div>
             <div className="cardDesc">{project.projectDescription}</div>

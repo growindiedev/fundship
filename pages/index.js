@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CategoryComponent from "../components/CategoryComponent";
 import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
-import Link from "next/router";
+import Link from "next/link";
 import dummyPic from "../assets/pg1.jpg";
 
 export default function Home(props) {
@@ -70,14 +70,16 @@ export default function Home(props) {
               query: { index: project.index },
             }}
           >
-            <div
-              className="rcmdCardImg"
-              style={{
-                backgroundImage: project.cid
-                  ? `url(${"https://" + project.cid})`
-                  : dummyPic,
-              }}
-            ></div>
+            <a>
+              <div
+                className="rcmdCardImg"
+                style={{
+                  backgroundImage: project.cid
+                    ? `url(${"https://" + project.cid})`
+                    : dummyPic,
+                }}
+              ></div>
+            </a>
           </Link>
           <div className="rcmdCardDetails">
             <div className="rcmdCardHeading">
@@ -87,7 +89,7 @@ export default function Home(props) {
                   query: { index: project.index },
                 }}
               >
-                {project.projectName}
+                <a>{project.projectName}</a>
               </Link>
             </div>
             <div className="rcmdCardFundedPercentage">
@@ -122,7 +124,7 @@ export default function Home(props) {
             <div className="statItemTag">projects </div>
           </div>
           <div className="statItem">
-            <div className="statItemValue">{stats.fundings + " AVAX"}</div>
+            <div className="statItemValue">{stats.fundings + " MATIC"}</div>
             <div className="statItemTag">towards creative work</div>
           </div>
           <div className="statItem">
@@ -143,14 +145,16 @@ export default function Home(props) {
                   query: { index: featuredRcmd[0].index },
                 }}
               >
-                <div
-                  className="featuredCardProjectImg"
-                  style={{
-                    backgroundImage: featuredRcmd[0].cid
-                      ? `url(${"https://" + featuredRcmd[0].cid})`
-                      : dummyPic,
-                  }}
-                ></div>
+                <a>
+                  <div
+                    className="featuredCardProjectImg"
+                    style={{
+                      backgroundImage: featuredRcmd[0].cid
+                        ? `url(${"https://" + featuredRcmd[0].cid})`
+                        : dummyPic,
+                    }}
+                  ></div>
+                </a>
               </Link>
               <div className="featuredProjectHeading">
                 <Link
@@ -159,7 +163,7 @@ export default function Home(props) {
                     query: { index: featuredRcmd[0].index },
                   }}
                 >
-                  {featuredRcmd[0].projectName}
+                  <a>{featuredRcmd[0].projectName}</a>
                 </Link>
               </div>
               <div className="featuredProjectDescription">

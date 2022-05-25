@@ -26,12 +26,14 @@ export default function NavbarComponent(props) {
               query: { address: props.address },
             }}
           >
-            {props.address.slice(0, 5) +
-              "..." +
-              props.address.slice(
-                props.address.length - 4,
-                props.address.length
-              )}
+            <a>
+              {props.address.slice(0, 5) +
+                "..." +
+                props.address.slice(
+                  props.address.length - 4,
+                  props.address.length
+                )}
+            </a>
           </Link>
         </div>
       </div>

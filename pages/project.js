@@ -2,6 +2,7 @@ import PaymentModal from "../components/PaymentModal";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import dummyPic from "../assets/pg1.jpg";
+import { useRouter } from "next/router";
 
 function ProjectComponent(props) {
   const [modalShow, setModalShow] = useState(false);
@@ -22,9 +23,9 @@ function ProjectComponent(props) {
   });
   const [timerString, setTimerString] = useState("");
   const [isOver, setIsOver] = useState(false);
-  console.log("propoye", props);
-  //const index = props.router?.query?.index;
-  const index = 0;
+  const router = useRouter();
+
+  const index = router.query.index;
   const PRECISION = 10 ** 18;
 
   // func to update the progress bar everytime getProjectDetails() executes.
@@ -101,7 +102,6 @@ function ProjectComponent(props) {
       });
     } catch (error) {
       alert("Error fetching details");
-      console.log("woot", index);
       console.log(error);
     }
   }
@@ -292,12 +292,12 @@ function ProjectComponent(props) {
               ></progress>
             </div>
             <div className="fundingValue">
-              <h2>{projectDetails.amountRaised / PRECISION} AVAX</h2>
+              <h2>{projectDetails.amountRaised / PRECISION} MATIC</h2>
             </div>
             <p className="goalValueContainer">
               pledged of{" "}
               <span className="goalValue">
-                {projectDetails.fundingGoal / PRECISION} AVAX
+                {projectDetails.fundingGoal / PRECISION} MATIC
               </span>{" "}
               goal
             </p>
@@ -375,11 +375,11 @@ function ProjectComponent(props) {
             </div>
             <div className="projectLinkContainer">
               <p className="projectLinkLabel">
-                Project link:
                 <a
                   className="projectLink"
                   target="_blank"
                   href={projectDetails.projectLink}
+                  rel="noreferrer"
                 >
                   {projectDetails.projectLink}
                 </a>
@@ -387,7 +387,6 @@ function ProjectComponent(props) {
             </div>
             <div className="projectLinkContainer">
               <p className="projectLinkLabel">
-                Owner:
                 <Link
                   className="projectLinkLabel"
                   href={{
@@ -398,7 +397,7 @@ function ProjectComponent(props) {
                     },
                   }}
                 >
-                  {" " + projectDetails.creatorName}
+                  <a>{`Owner: ${projectDetails.creatorName}`}</a>
                 </Link>
               </p>
             </div>

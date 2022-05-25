@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require("dotenv").config();
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -11,6 +12,10 @@ module.exports = {
     //    url: "https://rpc-mumbai.maticvigil.com",
     //    accounts: [process.env.privateKey]
     //  }
+    mumbai: {
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.apiKey}`,
+      accounts: [process.env.privateKey],
+    },
   },
   solidity: {
     version: "0.8.4",

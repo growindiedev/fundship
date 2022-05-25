@@ -1,6 +1,6 @@
 import { useState } from "react";
-//import { create } from "ipfs-http-client";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+import { useRouter } from "next/router";
+import { create } from "ipfs-http-client";
 
 function CreateProjectComponent(props) {
   const [formInput, setFormInput] = useState({
@@ -16,6 +16,7 @@ function CreateProjectComponent(props) {
   });
 
   const [inputImage, setInputImage] = useState("");
+  const router = useRouter();
 
   // set the form input state if input changes
   function handleChange(e) {
@@ -65,21 +66,17 @@ function CreateProjectComponent(props) {
   // submit the form input data to smart contract
   async function submitProjectData(e) {
     // handle the submit action of the form
-    // const client = create({
-    //   host: "ipfs.infura.io",
-    //   port: 5001,
-    //   protocol: "https",
-    // });
-    const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+    const client = create({
+      host: "ipfs.infura.io",
+      port: 5001,
+      protocol: "https",
+    });
     e.preventDefault();
     if (inputImage) {
       try {
         const added = await client.add(inputImage);
         console.log(added.path);
-        const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-
-        //formInput["image"] = `ipfs.io/ipfs/${added.path}`;
-        formInput["image"] = url;
+        formInput["image"] = `ipfs.io/ipfs/${added.path}`;
       } catch (error) {
         alert("Uploading file error: " + error);
         console.log(error);
@@ -121,6 +118,7 @@ function CreateProjectComponent(props) {
       await txn.wait(txn);
       alert("Project creation complete!!");
       document.getElementsByName("projectForm")[0].reset();
+      router.push("/");
       return false;
     } catch (error) {
       alert("Error on calling function: " + error);
@@ -183,7 +181,7 @@ function CreateProjectComponent(props) {
           placeholder="Enter link to the project"
           onChange={handleChange}
         />
-        <label>Funding Goal (AVAX)</label>
+        <label>Funding Goal (MATIC)</label>
         <input
           type="number"
           step="1"
