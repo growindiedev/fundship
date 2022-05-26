@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { create } from "ipfs-http-client";
+import { create as ipfsHttpClient } from "ipfs-http-client";
+
+const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 function CreateProjectComponent(props) {
   const [formInput, setFormInput] = useState({
@@ -63,20 +65,13 @@ function CreateProjectComponent(props) {
     return refundCode[formInput["refundPolicy"]];
   }
 
-  // submit the form input data to smart contract
   async function submitProjectData(e) {
-    // handle the submit action of the form
-    const client = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-    });
     e.preventDefault();
     if (inputImage) {
       try {
         const added = await client.add(inputImage);
         console.log(added.path);
-        formInput["image"] = `ipfs.io/ipfs/${added.path}`;
+        formInput["image"] = `ipfs.infura.io/ipfs/${added.path}`;
       } catch (error) {
         alert("Uploading file error: " + error);
         console.log(error);

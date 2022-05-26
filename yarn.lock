@@ -1316,7 +1316,7 @@
     "merkle-patricia-tree" "^4.2.4"
     "rustbn.js" "~0.2.0"
 
-"@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.0", "@ethersproject/abi@5.6.2":
+"@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.0":
   "integrity" "sha512-40Ixjhy+YzFtnvzIqFU13FW9hd1gMoLa3cJfSDnfnL4o8EnEG1qLiV8sNJo3sHYi9UYMfFeRuZ7kv5+vhzU7gQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.6.2.tgz"
   "version" "5.6.2"
@@ -1343,6 +1343,21 @@
     "@ethersproject/logger" ">=5.0.0-beta.129"
     "@ethersproject/properties" ">=5.0.0-beta.131"
     "@ethersproject/strings" ">=5.0.0-beta.130"
+
+"@ethersproject/abi@5.6.0":
+  "integrity" "sha512-AhVByTwdXCc2YQ20v300w6KVHle9g2OFc28ZAFCPnJyEpkv1xKXjZcSTgWOlv1i+0dqlgF8RCF2Rn2KC1t+1Vg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.6.0.tgz"
+  "version" "5.6.0"
+  dependencies:
+    "@ethersproject/address" "^5.6.0"
+    "@ethersproject/bignumber" "^5.6.0"
+    "@ethersproject/bytes" "^5.6.0"
+    "@ethersproject/constants" "^5.6.0"
+    "@ethersproject/hash" "^5.6.0"
+    "@ethersproject/keccak256" "^5.6.0"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/strings" "^5.6.0"
 
 "@ethersproject/abstract-provider@^5.0.8":
   "version" "5.0.8"
@@ -1377,10 +1392,21 @@
     "@ethersproject/logger" "^5.0.8"
     "@ethersproject/properties" "^5.0.7"
 
-"@ethersproject/abstract-signer@^5.6.0", "@ethersproject/abstract-signer@5.6.1":
+"@ethersproject/abstract-signer@^5.6.0":
   "integrity" "sha512-xhSLo6y0nGJS7NxfvOSzCaWKvWb1TLT7dQ0nnpHZrDnC67xfnWm9NXflTMFPUXXMtjr33CdV0kWDEmnbrQZ74Q=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.6.1.tgz"
   "version" "5.6.1"
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.6.0"
+    "@ethersproject/bignumber" "^5.6.0"
+    "@ethersproject/bytes" "^5.6.0"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+
+"@ethersproject/abstract-signer@5.6.0":
+  "integrity" "sha512-WOqnG0NJKtI8n0wWZPReHtaLkDByPL67tn4nBaDAhmVq8sjHTPbCdz4DRhVu/cfTOvfy9w3iq5QZ7BX7zw56BQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/abstract-provider" "^5.6.0"
     "@ethersproject/bignumber" "^5.6.0"
@@ -1435,10 +1461,19 @@
     "@ethersproject/logger" "^5.0.8"
     "bn.js" "^4.4.0"
 
-"@ethersproject/bignumber@^5.6.0", "@ethersproject/bignumber@5.6.1":
+"@ethersproject/bignumber@^5.6.0":
   "integrity" "sha512-UtMeZ3GaUuF9sx2u9nPZiPP3ULcAFmXyvynR7oHl/tPrM+vldZh7ocMsoa1PqKYGnQnqUZJoqxZnGN6J0qdipA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.6.1.tgz"
   "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.0"
+    "@ethersproject/logger" "^5.6.0"
+    "bn.js" "^4.11.9"
+
+"@ethersproject/bignumber@5.6.0":
+  "integrity" "sha512-VziMaXIUHQlHJmkv1dlcd6GY2PmT0khtAqaMctCIDogxkrarMzA9L94KN1NeXqqOfFD6r0sJT3vCTOFSmZ07DA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/bytes" "^5.6.0"
     "@ethersproject/logger" "^5.6.0"
@@ -1449,10 +1484,17 @@
   dependencies:
     "@ethersproject/logger" "^5.0.8"
 
-"@ethersproject/bytes@^5.6.0", "@ethersproject/bytes@5.6.1":
+"@ethersproject/bytes@^5.6.0":
   "integrity" "sha512-NwQt7cKn5+ZE4uDn+X5RAXLp46E1chXoaMmrxAyA0rblpxz8t58lVkrHXoRIn0lz1joQElQ8410GqhTqMOwc6g=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bytes/-/bytes-5.6.1.tgz"
   "version" "5.6.1"
+  dependencies:
+    "@ethersproject/logger" "^5.6.0"
+
+"@ethersproject/bytes@5.6.0":
+  "integrity" "sha512-3hJPlYemb9V4VLfJF5BfN0+55vltPZSHU3QKUyP9M3Y2TcajbiRrz65UG+xVHOzBereB1b9mn7r12o177xgN7w=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/bytes/-/bytes-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
@@ -1468,10 +1510,10 @@
   dependencies:
     "@ethersproject/bignumber" "^5.6.0"
 
-"@ethersproject/contracts@5.6.1":
-  "integrity" "sha512-0fpBBDoPqJMsutE6sNjg6pvCJaIcl7tliMQTMRcoUWDACfjO68CpKOJBlsEhEhmzdnu/41KbrfAeg+sB3y35MQ=="
-  "resolved" "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.6.1.tgz"
-  "version" "5.6.1"
+"@ethersproject/contracts@5.6.0":
+  "integrity" "sha512-74Ge7iqTDom0NX+mux8KbRUeJgu1eHZ3iv6utv++sLJG80FVuU9HnHeKVPfjd9s3woFhaFoQGf3B3iH/FrQmgw=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/abi" "^5.6.0"
     "@ethersproject/abstract-provider" "^5.6.0"
@@ -1510,10 +1552,10 @@
     "@ethersproject/properties" "^5.0.7"
     "@ethersproject/strings" "^5.0.8"
 
-"@ethersproject/hdnode@^5.6.0", "@ethersproject/hdnode@5.6.1":
-  "integrity" "sha512-6IuYDmbH5Bv/WH/A2cUd0FjNr4qTLAvyHAECiFZhNZp69pPvU7qIDwJ7CU7VAkwm4IVBzqdYy9mpMAGhQdwCDA=="
-  "resolved" "https://registry.npmjs.org/@ethersproject/hdnode/-/hdnode-5.6.1.tgz"
-  "version" "5.6.1"
+"@ethersproject/hdnode@^5.6.0", "@ethersproject/hdnode@5.6.0":
+  "integrity" "sha512-61g3Jp3nwDqJcL/p4nugSyLrpl/+ChXIOtCEM8UDmWeB3JCAt5FoLdOMXQc3WWkc0oM2C0aAn6GFqqMcS/mHTw=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/hdnode/-/hdnode-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/abstract-signer" "^5.6.0"
     "@ethersproject/basex" "^5.6.0"
@@ -1574,10 +1616,17 @@
   dependencies:
     "@ethersproject/logger" "^5.0.8"
 
-"@ethersproject/networks@^5.6.0", "@ethersproject/networks@5.6.2":
+"@ethersproject/networks@^5.6.0":
   "integrity" "sha512-9uEzaJY7j5wpYGTojGp8U89mSsgQLc40PCMJLMCnFXTs7nhBveZ0t7dbqWUNrepWTszDbFkYD6WlL8DKx5huHA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.6.2.tgz"
   "version" "5.6.2"
+  dependencies:
+    "@ethersproject/logger" "^5.6.0"
+
+"@ethersproject/networks@5.6.0":
+  "integrity" "sha512-DaVzgyThzHgSDLuURhvkp4oviGoGe9iTZW4jMEORHDRCgSZ9K9THGFKqL+qGXqPAYLEgZTf5z2w56mRrPR1MjQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
@@ -1601,10 +1650,10 @@
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
-"@ethersproject/providers@5.6.6":
-  "integrity" "sha512-6X6agj3NeQ4tgnvBMCjHK+CjQbz+Qmn20JTxCYZ/uymrgCEOpJtY9zeRxJIDsSi0DPw8xNAxypj95JMCsapUfA=="
-  "resolved" "https://registry.npmjs.org/@ethersproject/providers/-/providers-5.6.6.tgz"
-  "version" "5.6.6"
+"@ethersproject/providers@5.6.1":
+  "integrity" "sha512-w8Wx15nH+aVDvnoKCyI1f3x0B5idmk/bDJXMEUqCfdO8Eadd0QpDx9lDMTMmenhOmf9vufLJXjpSm24D3ZnVpg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/providers/-/providers-5.6.1.tgz"
+  "version" "5.6.1"
   dependencies:
     "@ethersproject/abstract-provider" "^5.6.0"
     "@ethersproject/abstract-signer" "^5.6.0"
@@ -1665,10 +1714,22 @@
     "@ethersproject/properties" "^5.0.7"
     "elliptic" "6.5.3"
 
-"@ethersproject/signing-key@^5.6.0", "@ethersproject/signing-key@5.6.1":
+"@ethersproject/signing-key@^5.6.0":
   "integrity" "sha512-XvqQ20DH0D+bS3qlrrgh+axRMth5kD1xuvqUQUTeezxUTXBOeR6hWz2/C6FBEu39FRytyybIWrYf7YLSAKr1LQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.6.1.tgz"
   "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.0"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "bn.js" "^4.11.9"
+    "elliptic" "6.5.4"
+    "hash.js" "1.1.7"
+
+"@ethersproject/signing-key@5.6.0":
+  "integrity" "sha512-S+njkhowmLeUu/r7ir8n78OUKx63kBdMCPssePS89So1TH4hZqnWFsThEd/GiXYp9qMxVrydf7KdM9MTGPFukA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/bytes" "^5.6.0"
     "@ethersproject/logger" "^5.6.0"
@@ -1742,10 +1803,10 @@
     "@ethersproject/constants" "^5.6.0"
     "@ethersproject/logger" "^5.6.0"
 
-"@ethersproject/wallet@5.6.1":
-  "integrity" "sha512-oXWoOslEWtwZiViIMlGVjeKDQz/tI7JF9UkyzN9jaGj8z7sXt2SyFMb0Ev6vSAqjIzrCrNrJ/+MkAhtKnGOfZw=="
-  "resolved" "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.6.1.tgz"
-  "version" "5.6.1"
+"@ethersproject/wallet@5.6.0":
+  "integrity" "sha512-qMlSdOSTyp0MBeE+r7SUhr1jjDlC1zAXB8VD84hCnpijPQiSNbxr6GdiLXxpUs8UKzkDiNYYC5DRI3MZr+n+tg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.6.0.tgz"
+  "version" "5.6.0"
   dependencies:
     "@ethersproject/abstract-provider" "^5.6.0"
     "@ethersproject/abstract-signer" "^5.6.0"
@@ -7389,39 +7450,39 @@
     "utf8" "^3.0.0"
     "uuid" "^3.3.2"
 
-"ethers@^5.0.0", "ethers@^5.0.1", "ethers@^5.0.2", "ethers@^5.5.2", "ethers@^5.5.3":
-  "integrity" "sha512-2B2ZmSGvRcJpHnFMBk58mkXP50njFipUBCgLK8jUTFbomhVs501cLzyMU6+Vx8YnUDQxywC3qkZvd33xWS+2FA=="
-  "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.6.6.tgz"
-  "version" "5.6.6"
+"ethers@^5.0.0", "ethers@^5.0.1", "ethers@^5.0.2", "ethers@^5.5.2", "ethers@5.6.1":
+  "integrity" "sha512-qtl/2W+dwmUa5Z3JqwsbV3JEBZZHNARe5K/A2ePcNAuhJYnEKIgGOT/O9ouPwBijSqVoQnmQMzi5D48LFNOY2A=="
+  "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.6.1.tgz"
+  "version" "5.6.1"
   dependencies:
-    "@ethersproject/abi" "5.6.2"
+    "@ethersproject/abi" "5.6.0"
     "@ethersproject/abstract-provider" "5.6.0"
-    "@ethersproject/abstract-signer" "5.6.1"
+    "@ethersproject/abstract-signer" "5.6.0"
     "@ethersproject/address" "5.6.0"
     "@ethersproject/base64" "5.6.0"
     "@ethersproject/basex" "5.6.0"
-    "@ethersproject/bignumber" "5.6.1"
-    "@ethersproject/bytes" "5.6.1"
+    "@ethersproject/bignumber" "5.6.0"
+    "@ethersproject/bytes" "5.6.0"
     "@ethersproject/constants" "5.6.0"
-    "@ethersproject/contracts" "5.6.1"
+    "@ethersproject/contracts" "5.6.0"
     "@ethersproject/hash" "5.6.0"
-    "@ethersproject/hdnode" "5.6.1"
+    "@ethersproject/hdnode" "5.6.0"
     "@ethersproject/json-wallets" "5.6.0"
     "@ethersproject/keccak256" "5.6.0"
     "@ethersproject/logger" "5.6.0"
-    "@ethersproject/networks" "5.6.2"
+    "@ethersproject/networks" "5.6.0"
     "@ethersproject/pbkdf2" "5.6.0"
     "@ethersproject/properties" "5.6.0"
-    "@ethersproject/providers" "5.6.6"
+    "@ethersproject/providers" "5.6.1"
     "@ethersproject/random" "5.6.0"
     "@ethersproject/rlp" "5.6.0"
     "@ethersproject/sha2" "5.6.0"
-    "@ethersproject/signing-key" "5.6.1"
+    "@ethersproject/signing-key" "5.6.0"
     "@ethersproject/solidity" "5.6.0"
     "@ethersproject/strings" "5.6.0"
     "@ethersproject/transactions" "5.6.0"
     "@ethersproject/units" "5.6.0"
-    "@ethersproject/wallet" "5.6.1"
+    "@ethersproject/wallet" "5.6.0"
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 

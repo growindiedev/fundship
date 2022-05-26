@@ -1,11 +1,13 @@
 import "../styles/globals.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { utils } from "ethers";
 import { crowdfundingAddress } from "../config";
 import { AccountContext } from "../context.js";
 import { ethers } from "ethers";
 
 import ConnectWallet from "../components/ConnectWallet.js";
+import NavbarComponent from "../components/NavbarComponent";
+import FooterComponent from "../components/FooterComponent";
 import Layout from "../components/layout";
 
 import Crowdfunding from "../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json";
@@ -84,13 +86,19 @@ function MyApp({ Component, pageProps }) {
     }
   }
 
+  useEffect(() => {
+    connect();
+  }, [address]);
+
   function WithAuth() {
     return !myContract ? (
       <ConnectWallet connectMetamask={connect} />
     ) : (
-      <Layout address={address}>
+      <>
+        <NavbarComponent address={address} />
         <Component {...pageProps} contract={myContract} userAddress={address} />
-      </Layout>
+        <FooterComponent />
+      </>
     );
   }
 

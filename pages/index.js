@@ -103,6 +103,10 @@ export default function Home(props) {
     });
   };
 
+  // useEffect(() => {
+  //   getAllProjects();
+  // }, [props.contract]);
+
   useEffect(() => {
     getAllProjects();
   }, []);

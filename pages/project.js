@@ -112,7 +112,7 @@ function ProjectComponent(props) {
 
   useEffect(() => {
     getProjectDetails();
-  }, [modalShow]);
+  }, [modalShow, router]);
 
   // useEffect hook to handle the countdown timer
   useEffect(() => {

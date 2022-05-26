@@ -108,6 +108,10 @@ function ProfileComponent(props) {
   }, []);
 
   useEffect(() => {
+    getProjectList();
+  }, [router]);
+
+  useEffect(() => {
     if (props.userAddress === address) {
       // only executing if visit own profile
       getUserFundingList();

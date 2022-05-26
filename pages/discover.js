@@ -95,7 +95,11 @@ export default function DiscoverComponent(props) {
 
   useEffect(() => {
     getAllProjects();
-  }, [filter]);
+  }, [filter, router]);
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
 
   return (
     <>
