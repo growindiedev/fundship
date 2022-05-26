@@ -241,7 +241,7 @@ contract Crowdfunding {
         payable(msg.sender).transfer(projects[_index].amount[contributorIndex]);
     }
 
-    
+    //need to log events to know if the transaction has been completed
 
 
 
