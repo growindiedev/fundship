@@ -3,6 +3,8 @@ import { ethers } from "ethers";
 
 function PaymentModal(props) {
   let [amount, setAmount] = useState(1);
+  let [loading, setLoading] = useState();
+
   const PRECISION = 10 ** 18;
 
   // sets the modalShow state to false to disable rendering of modal
@@ -26,16 +28,17 @@ function PaymentModal(props) {
     try {
       let fund = { value: ethers.utils.parseEther(amount.toString()) };
       let txn = await props.contract.fundProject(props.index, fund);
+      setLoading(true);
       await txn.wait();
+      setLoading(false);
       alert(`${amount} MATIC Succesfully funded`);
-
       setAmount(1);
       closeModal();
     } catch (error) {
       console.log("Funding error: ");
       console.log(error);
       console.log("................");
-      alert("Error Sending MATIC");
+      alert("Error Sending MATIC, Try again");
     }
   }
 
@@ -64,8 +67,12 @@ function PaymentModal(props) {
             onChange={handleChange}
             required
           />
-          <button className="submit" onClick={() => sendFund()}>
-            Fund
+          <button
+            className="submit"
+            disabled={loading}
+            onClick={() => sendFund()}
+          >
+            {loading ? "Please wait" : "Fund"}
           </button>
         </div>
       </div>

@@ -18,6 +18,7 @@ function CreateProjectComponent(props) {
   });
 
   const [inputImage, setInputImage] = useState("");
+  const [loading, setLoading] = useState("");
   const router = useRouter();
 
   // set the form input state if input changes
@@ -52,6 +53,7 @@ function CreateProjectComponent(props) {
       film: 1,
       arts: 2,
       games: 3,
+      "social cause": 4,
     };
     return categoryCode[formInput["category"]];
   }
@@ -109,8 +111,9 @@ function CreateProjectComponent(props) {
         formInput["category"],
         formInput["refundPolicy"]
       );
-
+      setLoading(true);
       await txn.wait(txn);
+      setLoading(false);
       alert("Project creation complete!!");
       document.getElementsByName("projectForm")[0].reset();
       router.push("/");
@@ -118,6 +121,7 @@ function CreateProjectComponent(props) {
     } catch (error) {
       alert("Error on calling function: " + error);
       console.log(error);
+      setLoading(false);
     }
   }
 
@@ -135,6 +139,7 @@ function CreateProjectComponent(props) {
           <option value="film">Film</option>
           <option value="arts">Arts</option>
           <option value="games">Games</option>
+          <option value="social cause">Social Cause</option>
         </select>
         <label>Project Name</label>
         <input
@@ -203,7 +208,12 @@ function CreateProjectComponent(props) {
           <option value="refundable">Refundable</option>
           <option value="non-refundable">Non-Refundable</option>
         </select>
-        <input type="submit" className="submitButton" value="Submit" />
+        <input
+          type="submit"
+          className="submitButton"
+          value={loading ? "loading.." : "Submit"}
+          disabled={loading}
+        />
       </form>
     </div>
   );

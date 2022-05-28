@@ -6,7 +6,8 @@ contract Crowdfunding {
       DESIGNANDTECH,
       FILM,
       ARTS,
-      GAMES
+      GAMES,
+      SOCIALCAUSE
     }
 
     // Refund policies 

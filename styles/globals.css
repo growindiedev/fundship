@@ -26,6 +26,7 @@ a {
 /* Navbar Css */
 
 .navbar {
+  font-family: "Open Sans", sans-serif;
   height: 66px;
   width: 100%;
   border-bottom: 0.1rem solid #dcdedd;
@@ -144,6 +145,8 @@ a {
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-family: "Open Sans";
+
 }
 
 .smallHeading {
@@ -254,12 +257,13 @@ a {
 }
 
 .featuredProjectDescription {
-  font-size: 18px;
   color: #282828;
   letter-spacing: 0.5px;
   max-height: 42px;
   position: relative;
   overflow-y: hidden;
+  font-family: "Open Sans";
+  font-size: 16px;
 }
 
 .featuredProjectDescription::after {
@@ -495,6 +499,8 @@ a {
   background: url(../assets/bg3.png) no-repeat 100% 100%;
   background-size: 321px 220px;
   border-top: 0.1rem solid #dcdedd;
+    font-family: "Open Sans";
+
 }
 
 .footerContainer {
@@ -834,6 +840,7 @@ form {
 }
 
 .projectInformationContainer {
+  font-family: "Open Sans";
   width: 50%;
 }
 
@@ -929,7 +936,7 @@ form {
 }
 
 .description {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 .projectLinkContainer {
@@ -946,15 +953,16 @@ form {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  font-family: "Open Sans";
 }
 
 .projectLinkContainer:hover {
   box-shadow: inset 0 0 10px;
-  color: #0a0a0a;
+  color: #153e00d4;
 }
 
 .projectLinkContainer:hover .projectLink {
-  color: #282828;
+  color: #05ce78;
 }
 
 .projectLinkContainerWrapper {
@@ -967,8 +975,8 @@ form {
 }
 
 .projectLinkLabel {
-  font-size: 1.4em;
-  font-weight: 800;
+  font-size: 1.2em;
+  font-weight: 700;
   display: contents;
   max-width: 75%;
   text-overflow: ellipsis;
@@ -997,6 +1005,7 @@ form {
 }
 
 .contributors {
+  font-family: "Open Sans";
   width: 80%;
   margin: 0 10%;
   max-height: 500px;

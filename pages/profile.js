@@ -1,8 +1,9 @@
 import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { AccountContext } from "../context";
 
-function ProfileComponent(props) {
+function ProfileComponent() {
   const router = useRouter();
 
   const { address, name } = router.query;
@@ -10,14 +11,15 @@ function ProfileComponent(props) {
   const [ongoingProjects, setOngoingProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
   const [userFundedProjects, setUserFundedProjects] = useState([]);
+  const { contract, userAddress } = useContext(AccountContext);
 
   // fetch the projects created by the address passed as parameter
   async function getProjectList() {
     let res;
     try {
       // fetch the project information from the contract for the address
-      let indexList = await props.contract.getCreatorProjects(address);
-      res = await props.contract.getProjectsDetail(indexList).then((res) => {
+      let indexList = await contract.getCreatorProjects(address);
+      res = await contract.getProjectsDetail(indexList).then((res) => {
         let tmp = [];
         for (const index in res) {
           let {
@@ -69,8 +71,8 @@ function ProfileComponent(props) {
   async function getUserFundingList() {
     let res;
     try {
-      let fundingList = await props.contract
-        .getUserFundings(props.userAddress)
+      let fundingList = await contract
+        .getUserFundings(userAddress)
         .then((fundingList) => {
           let tmp = [];
           for (const index in fundingList) {
@@ -79,7 +81,7 @@ function ProfileComponent(props) {
           return tmp;
         });
 
-      res = await props.contract.getProjectsDetail(fundingList).then((res) => {
+      res = await contract.getProjectsDetail(fundingList).then((res) => {
         let tmp = [];
         for (const index in res) {
           let { cid, creatorName, projectDescription, projectName } = {
@@ -112,7 +114,7 @@ function ProfileComponent(props) {
   }, [router]);
 
   useEffect(() => {
-    if (props.userAddress === address) {
+    if (userAddress === address) {
       // only executing if visit own profile
       getUserFundingList();
     }
@@ -152,7 +154,7 @@ function ProfileComponent(props) {
       ) : (
         ""
       )}
-      {address === props.userAddress && userFundedProjects?.length ? (
+      {address === userAddress && userFundedProjects?.length ? (
         <div className="projectsContainer">
           <div className="projectList">
             <ScrollShowbarComponent

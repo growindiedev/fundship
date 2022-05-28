@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+
 export default function CategoryComponent(props) {
   const router = useRouter();
+
   const onClickFilter = (val) => {
     if (!props.isHome) {
       if (props.filter !== val) {
@@ -19,13 +21,16 @@ export default function CategoryComponent(props) {
       });
     }
   };
+
   const setSelectedFocus = () => {
     props.filter !== -1 &&
       document.getElementsByClassName("categoryItem")[props.filter]?.focus();
   };
+
   useEffect(() => {
     setSelectedFocus();
   }, []);
+
   return (
     <div className="category">
       <div
@@ -55,6 +60,13 @@ export default function CategoryComponent(props) {
         onClick={() => onClickFilter(3)}
       >
         Games
+      </div>
+      <div
+        className="categoryItem"
+        tabIndex="1"
+        onClick={() => onClickFilter(4)}
+      >
+        {"Social Cause"}
       </div>
     </div>
   );

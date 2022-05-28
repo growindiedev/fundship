@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import CategoryComponent from "../components/CategoryComponent";
 import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
 import Link from "next/link";
+import { AccountContext } from "../context";
 import dummyPic from "../assets/pg1.jpg";
 
-export default function Home(props) {
+export default function Home() {
+  const { contract } = useContext(AccountContext);
+
   const PRECISION = 10 ** 18;
   const [stats, setStats] = useState({
     projects: 0,
@@ -15,7 +18,7 @@ export default function Home(props) {
   const [recentUploads, setRecentUploads] = useState([]);
   const getAllProjects = async () => {
     try {
-      let res = await props.contract.getAllProjectsDetail().then((res) => {
+      let res = await contract.getAllProjectsDetail().then((res) => {
         let tmp = [];
         let amount = 0,
           contrib = 0;

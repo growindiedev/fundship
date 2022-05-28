@@ -158,8 +158,14 @@ function ProjectComponent(props) {
 
   // return category code
   function getCategoryFromCode(val) {
-    let categoryCode = ["Design & Tech", "Film", "Arts", "Games"];
-    if (val >= 0 && val < 4) return categoryCode[val];
+    let categoryCode = [
+      "Design & Tech",
+      "Film",
+      "Arts",
+      "Games",
+      "Social Cause",
+    ];
+    if (val >= 0 && val < 5) return categoryCode[val];
   }
 
   // convert epoch time format to dd/mm/yyyy format
@@ -374,32 +380,27 @@ function ProjectComponent(props) {
               </p>
             </div>
             <div className="projectLinkContainer">
-              <p className="projectLinkLabel">
-                <a
-                  className="projectLink"
-                  target="_blank"
-                  href={projectDetails.projectLink}
-                  rel="noreferrer"
-                >
-                  {projectDetails.projectLink}
-                </a>
-              </p>
+              <a
+                className="projectLink projectLinkLabel"
+                target="_blank"
+                href={projectDetails.projectLink}
+                rel="noreferrer"
+              >
+                Project Link
+              </a>
             </div>
             <div className="projectLinkContainer">
-              <p className="projectLinkLabel">
-                <Link
-                  className="projectLinkLabel"
-                  href={{
-                    pathname: "/profile",
-                    query: {
-                      address: projectDetails.creatorAddress,
-                      name: projectDetails.creatorName,
-                    },
-                  }}
-                >
-                  <a>{`Owner: ${projectDetails.creatorName}`}</a>
-                </Link>
-              </p>
+              <Link
+                href={{
+                  pathname: "/profile",
+                  query: {
+                    address: projectDetails.creatorAddress,
+                    name: projectDetails.creatorName,
+                  },
+                }}
+              >
+                <a className="projectLink projectLinkLabel">{`Owner: ${projectDetails.creatorName}`}</a>
+              </Link>
             </div>
             <div className="projectLinkContainer">
               <p className="projectLinkLabel">

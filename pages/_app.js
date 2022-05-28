@@ -88,7 +88,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     connect();
-  }, [address]);
+  }, []);
 
   function WithAuth() {
     return !myContract ? (
@@ -104,7 +104,15 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div className="app">
-      <WithAuth />
+      <AccountContext.Provider
+        value={{
+          connectToMetamask: connect,
+          userAddress: address,
+          contract: myContract,
+        }}
+      >
+        <WithAuth />
+      </AccountContext.Provider>
     </div>
   );
 }
