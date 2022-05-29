@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
                   symbol: "MATIC",
                   decimals: 18,
                 },
-                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
                 blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
               },
             ],
