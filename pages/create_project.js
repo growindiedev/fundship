@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import { AccountContext } from "../context";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-function CreateProjectComponent(props) {
+function CreateProjectComponent() {
   const [formInput, setFormInput] = useState({
     category: "",
     projectName: "",
@@ -20,6 +21,7 @@ function CreateProjectComponent(props) {
   const [inputImage, setInputImage] = useState("");
   const [loading, setLoading] = useState("");
   const router = useRouter();
+  const { contract, userAddress } = useContext(AccountContext);
 
   // set the form input state if input changes
   function handleChange(e) {
@@ -100,7 +102,7 @@ function CreateProjectComponent(props) {
     // upload form data to contract
     let txn;
     try {
-      txn = await props.contract.createNewProject(
+      txn = await contract.createNewProject(
         formInput["projectName"],
         formInput["description"],
         formInput["creatorName"],

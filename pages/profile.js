@@ -1,13 +1,8 @@
 import ScrollShowbarComponent from "../components/ScrollShowbarComponent";
 import { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
 import { AccountContext } from "../context";
 
-function ProfileComponent() {
-  const router = useRouter();
-
-  const { address, name } = router.query;
-
+function ProfileComponent({ address, name }) {
   const [ongoingProjects, setOngoingProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
   const [userFundedProjects, setUserFundedProjects] = useState([]);
@@ -110,10 +105,6 @@ function ProfileComponent() {
   }, []);
 
   useEffect(() => {
-    getProjectList();
-  }, [router]);
-
-  useEffect(() => {
     if (userAddress === address) {
       // only executing if visit own profile
       getUserFundingList();
@@ -169,6 +160,14 @@ function ProfileComponent() {
       )}
     </div>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  const { address, name = null } = query;
+
+  return {
+    props: { address, name },
+  };
 }
 
 export default ProfileComponent;

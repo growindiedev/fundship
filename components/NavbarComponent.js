@@ -10,10 +10,10 @@ export default function NavbarComponent(props) {
         <div className="navItem" onClick={() => router.push("/")}>
           Home
         </div>
-        <div className="navItem" onClick={() => router.push("discover")}>
+        <div className="navItem" onClick={() => router.push("/discover")}>
           Discover
         </div>
-        <div className="navItem" onClick={() => router.push("create_project")}>
+        <div className="navItem" onClick={() => router.push("/create_project")}>
           Start a project
         </div>
       </nav>

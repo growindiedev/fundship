@@ -16,6 +16,7 @@ export default function Home() {
   });
   const [featuredRcmd, setFeaturedRcmd] = useState([]);
   const [recentUploads, setRecentUploads] = useState([]);
+
   const getAllProjects = async () => {
     try {
       let res = await contract.getAllProjectsDetail().then((res) => {

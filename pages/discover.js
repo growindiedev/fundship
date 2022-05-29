@@ -1,21 +1,22 @@
 import CategoryComponent from "../components/CategoryComponent";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import dummyPic from "../assets/pg1.jpg";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { AccountContext } from "../context";
 
-export default function DiscoverComponent(props) {
-  const router = useRouter();
-  const [filter, setFilter] = useState(
-    router.query?.selected >= 0 ? router.query?.selected : -1
-  );
+export default function DiscoverComponent({ selected }) {
+  const { contract, userAddress } = useContext(AccountContext);
+
+  //const [filter, setFilter] = useState(selected >= 0 ? selected : -1);
+  const [filter, setFilter] = useState(selected);
   const [projects, setProjects] = useState([]);
   const changeFilter = (val) => {
     setFilter(val);
   };
+
   const getAllProjects = async () => {
     try {
-      let res = await props.contract.getAllProjectsDetail().then((res) => {
+      let res = await contract.getAllProjectsDetail().then((res) => {
         let tmp = [];
         for (const index in res) {
           let {
@@ -59,6 +60,7 @@ export default function DiscoverComponent(props) {
       console.log(err);
     }
   };
+
   const renderCards = () => {
     return projects.map((project, index) => {
       return (
@@ -95,7 +97,7 @@ export default function DiscoverComponent(props) {
 
   useEffect(() => {
     getAllProjects();
-  }, [filter, router]);
+  }, [filter]);
 
   useEffect(() => {
     getAllProjects();
@@ -117,4 +119,12 @@ export default function DiscoverComponent(props) {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  const { selected = -1 } = query;
+
+  return {
+    props: { selected },
+  };
 }

@@ -88,7 +88,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     connect();
-  }, []);
+  }, [address]);
 
   function WithAuth() {
     return !myContract ? (
@@ -96,7 +96,7 @@ function MyApp({ Component, pageProps }) {
     ) : (
       <>
         <NavbarComponent address={address} />
-        <Component {...pageProps} contract={myContract} userAddress={address} />
+        <Component {...pageProps} />
         <FooterComponent />
       </>
     );

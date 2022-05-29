@@ -1,10 +1,10 @@
 import PaymentModal from "../components/PaymentModal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import dummyPic from "../assets/pg1.jpg";
-import { useRouter } from "next/router";
+import { AccountContext } from "../context";
 
-function ProjectComponent(props) {
+function ProjectComponent({ index }) {
   const [modalShow, setModalShow] = useState(false);
   const [projectDetails, setProjectDetails] = useState({
     amountRaised: 0,
@@ -23,9 +23,8 @@ function ProjectComponent(props) {
   });
   const [timerString, setTimerString] = useState("");
   const [isOver, setIsOver] = useState(false);
-  const router = useRouter();
+  const { contract, userAddress } = useContext(AccountContext);
 
-  const index = router.query.index;
   const PRECISION = 10 ** 18;
 
   // func to update the progress bar everytime getProjectDetails() executes.
@@ -39,7 +38,7 @@ function ProjectComponent(props) {
   async function getProjectDetails() {
     try {
       // fetching project information from the contract
-      let res = await props.contract.getProject(parseInt(index)).then((res) => {
+      let res = await contract.getProject(parseInt(index)).then((res) => {
         let {
           amountRaised,
           cid,
@@ -112,7 +111,7 @@ function ProjectComponent(props) {
 
   useEffect(() => {
     getProjectDetails();
-  }, [modalShow, router]);
+  }, [modalShow]);
 
   // useEffect hook to handle the countdown timer
   useEffect(() => {
@@ -178,7 +177,7 @@ function ProjectComponent(props) {
 
   // check if user is the project owner
   function isOwner() {
-    return props.userAddress === projectDetails.creatorAddress;
+    return userAddress === projectDetails.creatorAddress;
   }
 
   // check if claiming fund is possible for the project owner
@@ -192,7 +191,7 @@ function ProjectComponent(props) {
   async function claimFund() {
     let txn;
     try {
-      txn = await props.contract.claimFund(parseInt(index));
+      txn = await contract.claimFund(parseInt(index));
       await txn.wait(txn);
       alert("Fund succesfully claimed");
 
@@ -228,7 +227,7 @@ function ProjectComponent(props) {
 
   // get the contributor index of the user in the contributor[]
   function getContributorIndex() {
-    let idx = projectDetails.contributors.indexOf(props.userAddress);
+    let idx = projectDetails.contributors.indexOf(userAddress);
     return idx;
   }
 
@@ -243,7 +242,7 @@ function ProjectComponent(props) {
   async function claimRefund() {
     let txn;
     try {
-      txn = await props.contract.claimRefund(parseInt(index));
+      txn = await contract.claimRefund(parseInt(index));
       await txn.wait(txn);
       alert("Refund claimed succesfully");
       let refundClaimedCopy = [...projectDetails.refundClaimed];
@@ -358,11 +357,11 @@ function ProjectComponent(props) {
             {modalShow && (
               <PaymentModal
                 setModalShow={setModalShow}
-                contract={props.contract}
+                contract={contract}
                 index={index}
                 projectDetails={projectDetails}
                 setProjectDetails={setProjectDetails}
-                userAddress={props.userAddress}
+                userAddress={userAddress}
               />
             )}
           </div>
@@ -447,6 +446,14 @@ function ProjectComponent(props) {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  const { index = 1 } = query;
+
+  return {
+    props: { index },
+  };
 }
 
 export default ProjectComponent;
