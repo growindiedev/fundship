@@ -99,10 +99,6 @@ export default function DiscoverComponent({ selected }) {
     getAllProjects();
   }, [filter]);
 
-  useEffect(() => {
-    getAllProjects();
-  }, []);
-
   return (
     <>
       <CategoryComponent
@@ -123,6 +119,7 @@ export default function DiscoverComponent({ selected }) {
 
 export async function getServerSideProps({ query }) {
   const { selected = -1 } = query;
+  //let filtered = selected >= 0 ? selected : -1;
 
   return {
     props: { selected },

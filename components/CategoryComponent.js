@@ -15,9 +15,9 @@ export default function CategoryComponent(props) {
     } else {
       router.push({
         pathname: "/discover",
-        query: {
-          selected: val,
-        },
+        // query: {
+        //   selected: val,
+        // },
       });
     }
   };

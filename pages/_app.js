@@ -88,7 +88,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     connect();
-  }, [address]);
+  }, []);
 
   function WithAuth() {
     return !myContract ? (

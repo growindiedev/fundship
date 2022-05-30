@@ -121,9 +121,9 @@ export default function Home() {
       {/* siteStats */}
       <div className="siteStats">
         <div className="tagLine">
-          Creative work shows us what’s possible.
+          Finally, a decentralised crowdfunding platform
           <br></br>
-          Help fund it here.
+          Join the movement
         </div>
         <div className="smallHeading">TILL THIS DAY</div>
         <div className="stats">
