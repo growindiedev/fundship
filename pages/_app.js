@@ -8,7 +8,6 @@ import { ethers } from "ethers";
 import ConnectWallet from "../components/ConnectWallet.js";
 import NavbarComponent from "../components/NavbarComponent";
 import FooterComponent from "../components/FooterComponent";
-import Layout from "../components/layout";
 
 import Crowdfunding from "../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json";
 
