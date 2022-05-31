@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { FaSpinner } from "react-icons/fa";
 
 function PaymentModal(props) {
   let [amount, setAmount] = useState(1);
@@ -72,7 +73,11 @@ function PaymentModal(props) {
             disabled={loading}
             onClick={() => sendFund()}
           >
-            {loading ? "Please wait" : "Fund"}
+            {loading ? (
+              <FaSpinner icon="spinner" className="spinner" />
+            ) : (
+              "Fund"
+            )}
           </button>
         </div>
       </div>

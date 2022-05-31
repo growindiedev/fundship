@@ -3,9 +3,11 @@ import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import dummyPic from "../assets/pg1.jpg";
 import { AccountContext } from "../context";
+import { FaSpinner } from "react-icons/fa";
 
 function ProjectComponent({ index }) {
   const [modalShow, setModalShow] = useState(false);
+  const [loading, setLoading] = useState();
   const [projectDetails, setProjectDetails] = useState({
     amountRaised: 0,
     cid: "",
@@ -192,7 +194,9 @@ function ProjectComponent({ index }) {
     let txn;
     try {
       txn = await contract.claimFund(parseInt(index));
+      setLoading(true);
       await txn.wait(txn);
+      setLoading(false);
       alert("Fund succesfully claimed");
 
       setProjectDetails({
@@ -214,6 +218,7 @@ function ProjectComponent({ index }) {
         claimedAmount: true,
       });
     } catch (error) {
+      setLoading(false);
       alert("Error claiming fund: " + error);
       console.log(error);
     }
@@ -243,7 +248,9 @@ function ProjectComponent({ index }) {
     let txn;
     try {
       txn = await contract.claimRefund(parseInt(index));
+      setLoading(true);
       await txn.wait(txn);
+      setLoading(false);
       alert("Refund claimed succesfully");
       let refundClaimedCopy = [...projectDetails.refundClaimed];
       refundClaimedCopy[getContributorIndex()] = true;
@@ -267,6 +274,7 @@ function ProjectComponent({ index }) {
         claimedAmount: true,
       });
     } catch (error) {
+      setLoading(false);
       alert("Error claiming refund: " + error);
       console.log(error);
     }
@@ -332,8 +340,16 @@ function ProjectComponent({ index }) {
             ) : isOwner() ? (
               claimFundCheck() && !projectDetails.claimedAmount ? (
                 <div className="supportButtonContainer">
-                  <button className="supportButton" onClick={() => claimFund()}>
-                    Claim Fund
+                  <button
+                    className="supportButton"
+                    disabled={loading}
+                    onClick={() => claimFund()}
+                  >
+                    {loading ? (
+                      <FaSpinner icon="spinner" className="spinner" />
+                    ) : (
+                      "Claim Fund"
+                    )}
                   </button>
                 </div>
               ) : projectDetails.claimedAmount ? (
@@ -345,8 +361,16 @@ function ProjectComponent({ index }) {
               claimRefundCheck() &&
               !projectDetails.refundClaimed[getContributorIndex()] ? (
               <div className="supportButtonContainer">
-                <button className="supportButton" onClick={() => claimRefund()}>
-                  Claim Refund
+                <button
+                  className="supportButton"
+                  disabled={loading}
+                  onClick={() => claimRefund()}
+                >
+                  {loading ? (
+                    <FaSpinner icon="spinner" className="spinner" />
+                  ) : (
+                    "Claim Refund"
+                  )}
                 </button>
               </div>
             ) : projectDetails.refundClaimed[getContributorIndex()] ? (

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { AccountContext } from "../context";
+import { FaSpinner } from "react-icons/fa";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -210,12 +211,17 @@ function CreateProjectComponent() {
           <option value="refundable">Refundable</option>
           <option value="non-refundable">Non-Refundable</option>
         </select>
-        <input
+        <button
+          className="submit-project cta-button"
           type="submit"
-          className="submitButton"
-          value={loading ? "loading.." : "Submit"}
           disabled={loading}
-        />
+        >
+          {loading ? (
+            <FaSpinner icon="spinner" className="spinner" />
+          ) : (
+            "Submit"
+          )}
+        </button>
       </form>
     </div>
   );
